@@ -56,17 +56,26 @@ class HashTable {
     if (this.capacityIsFull()) this.resize();
     const index = getIndexBelowMax(key.toString(), this.limit);
     let bucket = this.storage[index];
-
-    bucket = bucket.filter(item => item[0] !== key);
-    bucket.push([key, value]);
-    this.storage.set(index, bucket);
+    const item = new Node(key, value);
+    // bucket = bucket.filter(item => item[0] !== key);
+    // bucket.push([key, value]);
+    // this.storage.set(index, bucket);
+    // New bucket if there isn't one
+    if (!bucket) {
+      bucket = new List(item);
+      bucket.count++;
+      this.count++;
+      
+    } else {
+      let current = bucket.head;
+    }
   }
   // Removes the key, value pair from the hash table
   // Fetch the bucket associated with the given key using the getIndexBelowMax function
   // Remove the key, value pair from the bucket
   remove(key) {
     const index = getIndexBelowMax(key.toString(), this.limit);
-    let bucket = this.storage.get(index);
+    let bucket = this.storage.get[index];
 
     if (bucket) {
       bucket = bucket.filter(item => item[0] !== key);
@@ -78,7 +87,7 @@ class HashTable {
   // Find the key, value pair inside the bucket and return the value
   retrieve(key) {
     const index = getIndexBelowMax(key.toString(), this.limit);
-    const bucket = this.storage.get(index);
+    const bucket = this.storage.get[index];
     let retrieved;
     if (bucket) {
       retrieved = bucket.filter(item => item[0] === key)[0];
